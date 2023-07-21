@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email Address</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of getCustomerDetails | async let i=index;">
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.emailAddress }}</td>
+          <td>
+            <p *ngIf="customer.address.addressLine1">
+              {{ customer.address.addressLine1 }}
+            </p>
+            <p *ngIf="customer.address.addressLine2">
+              {{ customer.address.addressLine2 }}
+            </p>
+            <p *ngIf="customer.address.addressLine3">
+              {{ customer.address.addressLine3 }}
+            </p>
+            <p *ngIf="customer.address.addressLine4">
+              {{ customer.address.addressLine4 }}
+            </p>
+            <p *ngIf="customer.address.postCode">
+              {{ customer.address.postCode }}
+            </p>
+          </td>
+          <td>
+              <button class="btn btn-default" (click)="update(customer,customer.id)">UPDATE</button>
+              <button class="btn btn-default"  (click)="delete(customer,customer.id)">DELETE</button>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div *ngFor="let dd of getCustomerDetails | async">
+  {{ dd | json }}
+</div>
