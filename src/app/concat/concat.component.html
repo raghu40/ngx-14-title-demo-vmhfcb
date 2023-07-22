@@ -1,9 +1,18 @@
-<div class="container">
-  <div class="row">
-
-    this is the Contact Page...
-  </div> 
+<form [formGroup]="myForm">
+<div class="form-group">
+  <label> firstName</label>
+  <input type="text"name="fisrtName" id="fisrtName" formControlName="firstName" />
 </div>
-<a routerLink="mydetails">this contact link </a>
-sdsdsd
-<router-outlet></router-outlet>
+<div class="form-group">
+  <label> Last Name</label>
+  <input type="text"name="lastName" id="lastName" formControlName="lastName" />
+</div>
+<div class="form-group">
+  <button class="btn btn-default" (click)="addToStore()">Submit</button>
+</div>
+
+</form>
+<!--<a routerLink="mydetails">this contact link </a>
+
+<router-outlet></router-outlet>-->
+<app-mydetails [sendData]="contactData" (updateData)="getUpdateData($event)"></app-mydetails>

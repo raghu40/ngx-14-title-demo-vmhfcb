@@ -6,7 +6,7 @@ export class customer {
   address: any;
 }
 
-export function customerReducer(state: customer[] = [], action) {
+export function customerReducer(state = [], action) {
   console.log(state);
   console.log(action);
   switch (action.type) {

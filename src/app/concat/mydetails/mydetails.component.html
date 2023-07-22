@@ -1,3 +1,25 @@
-<p>
-mydetails works!sfsdsdsd
-</p>
+{{sendData | json}}
+<table id="table" >
+<tr>
+  <th>
+    Name
+  </th>
+  <th>
+    Gender
+  </th>
+</tr>
+
+  <tr *ngFor="let d of sendData let i = index" >
+    <td>
+      {{d.firstName}}
+    </td>
+    <td>
+      {{d.lastName}}
+    </td>
+    <td>
+      <button (click)="removeFromTable(d.id)">remove</button>
+      <button (click)="Update(d)">Update</button>
+    </td>
+  </tr>
+
+</table>
