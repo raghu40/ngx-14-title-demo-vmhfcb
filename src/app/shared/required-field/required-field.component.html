@@ -1,0 +1,39 @@
+ 
+<div
+  [ngClass]="
+    !controlDir?.control?.touched
+      ? 'form-group'
+      : controlDir?.control?.touched && controlDir?.control?.invalid
+      ? 'form-group has-error has-feedback'
+      : 'form-group has-success has-feedback'
+  "
+>
+  <label for="firstName" class="control-label col-sm-2"> {{placeholder}}</label>
+  <div class="col-sm-3">
+    <input
+      type="text"
+      (input)="onChange($any($event.target).value)"
+      (blur)="onTouched(); blur.emit()"
+      [disabled]="disabled"
+      [placeholder]="placeholder"
+      class="form-control"
+    />
+    <span
+      *ngIf="controlDir?.control?.touched"
+      [ngClass]="
+        controlDir?.control?.invalid
+          ? 'glyphicon glyphicon-remove form-control-feedback'
+          : 'glyphicon glyphicon-ok form-control-feedback'
+      "
+    ></span>
+    <div
+      *ngIf="
+        (controlDir?.control?.touched || controlDir?.control?.dirty) &&
+        controlDir?.control.invalid
+      "
+      class="invalid-feedback"
+    >
+    <span class="text text-danger">{{placeholder}} is required!</span>
+    </div>
+  </div>
+</div>

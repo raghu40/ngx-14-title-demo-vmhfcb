@@ -1,0 +1,35 @@
+<div class="container">
+  <h1> Sign UP Form</h1>
+<form [formGroup]="signUPForm" class="form-horizontal" (ngSubmit)="signup()">
+  <app-required-field
+    formControlName="userName"
+    placeholder="User Name"
+    [parent]="signUPForm"
+  ></app-required-field>
+  <app-required-password
+    formControlName="password"
+    placeholder="Password"
+    [parent]="signUPForm"
+  ></app-required-password>
+  <app-required-password
+    formControlName="repassword"
+    placeholder="Confirm Password"
+    [parent]="signUPForm"
+  ></app-required-password>
+  <app-required-email formControlName="emailAddress"
+  placeholder="Email Address"
+  [parent]="signUPForm">
+
+  </app-required-email>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+       <button class="btn btn-success" [disabled]="!signUPForm.valid"> Sign Up</button>
+    </div>
+  </div>
+</form>
+<div class="alert alert-success" *ngIf="success">
+<strong>Success!</strong> Registration. Please click <a [routerLink]="['/login']">login</a>.
+</div>
+
+</div>
+ 
