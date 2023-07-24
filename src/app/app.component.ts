@@ -1,5 +1,6 @@
 import { Component, VERSION } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './common/auth.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class AppComponent {
   name = 'Welcome to my Demo Project';
   isDisplayLogin = true;
   userName: string;
+   public newdata = new BehaviorSubject({});
   constructor(private authservice: AuthService, private router: Router) {
     this.authservice._loginData.subscribe((data) => {
       if (data['valid'] == true) {
@@ -23,6 +25,10 @@ export class AppComponent {
   }
   logout() {
     this.router.navigate(['/home']);
-    this.authservice.logout();
-  }
+    this.isDisplayLogin = true;
+    this.authservice._loginData.subscribe((data) => {
+       data['valid']= false;
+       data['name'] = '';
+  });
+}
 }

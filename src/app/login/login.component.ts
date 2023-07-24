@@ -5,31 +5,28 @@ import { AuthService } from '../common/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   userDetails = {
     userName: '',
-    password:''
-  }
+    password: '',
+  };
   unSuccess = false;
 
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  submitForm(userEnterData){
-    this.authService.login(userEnterData);
-    this.authService._loginData.subscribe(data => {
-      if(data['valid'] == true){
-         this.router.navigate(['/concat'])
+  submitForm(userEnterData) {
+      this.authService.login(userEnterData);
+    this.authService._loginData.subscribe((data) => {
+      if (data['valid'] == true) {
+        this.unSuccess = false;
+        this.router.navigate(['/concat']);
       } else {
-        this.router.navigate(['/home']);
+        this.unSuccess = true;
       }
-    })
-  
+    });
   }
-
 }

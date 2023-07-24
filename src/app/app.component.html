@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button
@@ -40,10 +40,10 @@
         </li>
         <li>
           <a *ngIf="isDisplayLogin" routerLink="/login"
-            ><span class="glyphicon glyphicon-log-in"></span> Login</a
+          routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a
           >
           <a *ngIf="!isDisplayLogin" (click)="logout()"
-            ><span class="glyphicon glyphicon-log-in"></span> Logout</a
+          routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Logout</a
           >
         </li>
       </ul>
