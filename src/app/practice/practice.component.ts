@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Route } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { customer } from '../common/customer.service';
 
 @Component({
   selector: 'app-practice',
@@ -9,11 +11,18 @@ import { Store } from '@ngrx/store';
 })
 export class PracticeComponent implements OnInit {
   customerForm: FormGroup;
-  customerRecords:any;
+  customerRecords: any;
 
-  constructor(private formbuilder: FormBuilder, private store: Store) {
+  customerData: customer[];
+  isUpdate: Boolean = false;
+
+  constructor(
+    private formbuilder: FormBuilder,
+    private store: Store,
+    private route: ActivatedRoute
+  ) {
     this.customerForm = this.formbuilder.group({
-      id:[''],
+      id: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       emailAddress: ['', [Validators.required]],
@@ -28,11 +37,13 @@ export class PracticeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.select(state => state['customer']).subscribe(data => {
-      this.customerRecords = data;
-    } )
+    this.store
+      .select((state) => state['customer'])
+      .subscribe((data) => {
+        this.customerRecords = data;
+      });
 
-  
+    this.customerData = this.route.snapshot.data['customerData'];
   }
 
   get firstName() {
@@ -41,22 +52,24 @@ export class PracticeComponent implements OnInit {
 
   submitForm() {
     console.log(this.customerForm.value);
-    if(this.customerRecords.length > 0) {
-    let customer =  ( this.customerRecords.filter(data => data['id'] == this.customerForm.get('id').value));
-    if(customer.length == 1) {
-       
-      Object.assign(this.customerRecords,[this.customerForm.value]);
+    if (this.customerForm.value && this.isUpdate) {
+         this.store.dispatch({
+        type: 'UPDATE_CUSTOMER',
+        payload: this.customerForm.value,
+      });
+      this.isUpdate = false;
+    } else {
+      this.customerForm.get('id').setValue(this.customerRecords.length + 1);
+      this.store.dispatch({
+        type: 'ADD_CUSTOMER',
+        payload: this.customerForm.value,
+      });
     }
-    }
-    this.customerForm.get('id').setValue(this.customerRecords.length + 1);
-    this.store.dispatch({
-      type: 'ADD_CUSTOMER',
-      payload: this.customerForm.value,
-    });
     this.customerForm.reset();
   }
 
-  selectedData(data){
-   this.customerForm.patchValue(data)
+  selectedData(data) {
+    this.customerForm.patchValue(data);
+    this.isUpdate = true;
   }
 }

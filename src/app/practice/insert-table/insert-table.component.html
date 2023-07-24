@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of getCustomerDetails | async let i=index;">
+        <tr *ngFor="let customer of getCustomerDetails; let i=index;">
           <td>{{ customer.firstName }}</td>
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.emailAddress }}</td>
@@ -41,7 +41,4 @@
   </div>
 </div>
 
-
-<div *ngFor="let dd of getCustomerDetails | async">
-  {{ dd | json }}
-</div>
+ 

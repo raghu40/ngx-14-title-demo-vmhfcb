@@ -9,14 +9,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./insert-table.component.css'],
 })
 export class InsertTableComponent implements OnInit {
-  getCustomerDetails:Observable<any>;
+  getCustomerDetails:any;
   @Output() selectedRecord = new EventEmitter();
    constructor(private store: Store) {
     
   }
 
   ngOnInit() {
-    this.getCustomerDetails = this.store.select(state => state['customer'])
+    this.store.select(state => state['customer']).subscribe(data => {
+      this.getCustomerDetails = data;
+    })
     
   }
 
@@ -25,6 +27,12 @@ export class InsertTableComponent implements OnInit {
   }
 
   delete(selectedRecord,index){
-    this.store.dispatch({type:'DELETE_CUSTOMER', payload: index});
+    this.store.dispatch({type:'DELETE_CUSTOMER', payload: selectedRecord});
+    if( this.getCustomerDetails.length > 0) {
+      this.getCustomerDetails.forEach((data,index) => {
+        data['id'] = index +1;
+    })
+    }
+    
   }
 }

@@ -1,5 +1,5 @@
 export class customer {
-  id:number;
+  id: number;
   firstName: string;
   lastName: string;
   emailAddress: string;
@@ -13,14 +13,18 @@ export function customerReducer(state = [], action) {
     case 'ADD_CUSTOMER': {
       return [...state, action.payload];
     }
+    case 'UPDATE_CUSTOMER': {
+      let selectedData = action.payload;
+      return state.map((data) =>
+        data['id'] == selectedData['id'] ? selectedData : data
+      );
+    }
     case 'DELETE_CUSTOMER': {
-      console.log(state);
-      console.log(state.splice(action.payload, 1));
-      return state.splice(0, 1);
+      let selectedData = action.payload;
+      return state.filter((data) => data['id'] != selectedData['id']);
     }
     case 'SELCTED_CUSTOMER': {
-     
-         return state.filter((data => data['id'] == action.payload));
+      return state.filter((data) => data['id'] == action.payload);
     }
 
     default:
