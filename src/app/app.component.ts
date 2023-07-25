@@ -11,6 +11,7 @@ import { AuthService } from './common/auth.service';
 export class AppComponent {
   name = 'Welcome to my Demo Project';
   isDisplayLogin = true;
+  showmenu = false
   userName: string;
    public newdata = new BehaviorSubject({});
   constructor(private authservice: AuthService, private router: Router) {
@@ -30,5 +31,9 @@ export class AppComponent {
        data['valid']= false;
        data['name'] = '';
   });
+}
+
+showMenu(){
+  this.showmenu =  !this.showmenu;
 }
 }

@@ -16,7 +16,10 @@ export class ValidationGuardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     this.authService._loginData.subscribe((data) => {
-      if (!data['valid'] && (Object.keys(data).length === 0 || data['name'] == '')) {
+      if (
+        !data['valid'] &&
+        (Object.keys(data).length === 0 || data['name'] == '')
+      ) {
         if (confirm('You dont have access. Please login first')) {
           this.router.navigate(['/login']);
           return false;
